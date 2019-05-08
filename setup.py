@@ -8,10 +8,10 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'umalog'
-NAME_PACKAGE = 'umalog'
-DESCRIPTION = 'alat pencatat pribadi'
-URL = 'https://github.com/taruma/umalog'
+NAME = 'umakit'
+NAME_PACKAGE = 'umakit'
+DESCRIPTION = 'Paket python buatan uma'
+URL = 'https://github.com/taruma/umakit'
 EMAIL = 'hi@taruma.info'
 AUTHOR = 'Taruma'
 REQUIRES_PYTHON = '>=3.6.0'
