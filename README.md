@@ -1,2 +1,4 @@
-# umalog
-Alat pencatat (logging) pribadi
+# umakit
+Paket python pribadi
+
+`umalog.logtool` untuk alat pencatat (logging)
