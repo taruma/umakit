@@ -20,6 +20,13 @@ class LogTool(object):
     def _reset(self):
         self.log = []
         self.dtime = {}
+
+    def _diff_dtime(self, index):
+        if not self.dtime[index]:
+            return None
+        start, end = self.dtime[index]
+        hours, minutes, seconds = convert_timedelta(end - start)
+        return hours, minutes, seconds
     
     def add(self, message, timelog=False):
         if self.timelog or timelog:
@@ -40,12 +47,6 @@ class LogTool(object):
             self.dtime[index].pop(0)        
         return now.strftime('%Y-%m-%d %H:%M:%S')
         
-    def _diff_dtime(self, index):
-        if not self.dtime[index]:
-            return None
-        start, end = self.dtime[index]
-        hours, minutes, seconds = convert_timedelta(end - start)
-        return hours, minutes, seconds
 
     def duration(self, index):
         hours, minutes, seconds = self._diff_dtime(index)
@@ -55,3 +56,7 @@ class LogTool(object):
         msg = "\n".join(self.log)
         return msg
 
+    def add_savepoint(self, message, index, timelog=False):
+        msg = self.add(message, timelog=timelog)
+        self.savepoint(index)
+        return msg 
