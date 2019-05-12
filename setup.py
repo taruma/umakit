@@ -15,7 +15,7 @@ URL = 'https://github.com/taruma/umakit'
 EMAIL = 'hi@taruma.info'
 AUTHOR = 'Taruma'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
