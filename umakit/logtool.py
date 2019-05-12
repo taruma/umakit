@@ -9,7 +9,7 @@ def convert_timedelta(duration):
     seconds = (seconds % 60)
     return hours, minutes, seconds
 
-class LogTool(object):
+class LogTool():
     
     def __init__(self, file=None, log=[], dtime={}, timelog=True):
         self.log = log
@@ -20,6 +20,13 @@ class LogTool(object):
     def _reset(self):
         self.log = []
         self.dtime = {}
+
+    def _diff_dtime(self, index):
+        if not self.dtime[index]:
+            return None
+        start, end = self.dtime[index]
+        hours, minutes, seconds = convert_timedelta(end - start)
+        return hours, minutes, seconds
     
     def add(self, message, timelog=False):
         if self.timelog or timelog:
@@ -40,13 +47,6 @@ class LogTool(object):
             self.dtime[index].pop(0)        
         return now.strftime('%Y-%m-%d %H:%M:%S')
         
-    def _diff_dtime(self, index):
-        if not self.dtime[index]:
-            return None
-        start, end = self.dtime[index]
-        hours, minutes, seconds = convert_timedelta(end - start)
-        return hours, minutes, seconds
-
     def duration(self, index):
         hours, minutes, seconds = self._diff_dtime(index)
         return "{}:{}:{}".format(hours, minutes, seconds)
@@ -55,3 +55,17 @@ class LogTool(object):
         msg = "\n".join(self.log)
         return msg
 
+    def add_savepoint(self, message, index, timelog=False):
+        msg = self.add(message, timelog=timelog)
+        self.savepoint(index)
+        return msg
+    
+    def add_duration(self, index):
+        duration = self.duration(index)
+        self.add("Duration: {}".format(duration))
+        return duration
+    
+    def to_txt(self, path):
+        content = self.summary()
+        with open(path, "w") as file:
+            file.write(content)
