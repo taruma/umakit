@@ -9,7 +9,7 @@ def convert_timedelta(duration):
     seconds = (seconds % 60)
     return hours, minutes, seconds
 
-class LogTool(object):
+class LogTool():
     
     def __init__(self, file=None, log=[], dtime={}, timelog=True):
         self.log = log
@@ -47,7 +47,6 @@ class LogTool(object):
             self.dtime[index].pop(0)        
         return now.strftime('%Y-%m-%d %H:%M:%S')
         
-
     def duration(self, index):
         hours, minutes, seconds = self._diff_dtime(index)
         return "{}:{}:{}".format(hours, minutes, seconds)
@@ -59,4 +58,14 @@ class LogTool(object):
     def add_savepoint(self, message, index, timelog=False):
         msg = self.add(message, timelog=timelog)
         self.savepoint(index)
-        return msg 
+        return msg
+    
+    def add_duration(self, index):
+        duration = self.duration(index)
+        self.add("Duration: {}".format(duration))
+        return duration
+    
+    def to_txt(self, path):
+        content = self.summary()
+        with open(path, "w") as file:
+            file.write(content)
